@@ -7,8 +7,8 @@ require '../PHPMailer/PHPMailer/src/Exception.php';
 require '../PHPMailer/PHPMailer/src/PHPMailer.php';
 require '../PHPMailer/PHPMailer/src/SMTP.php';
 
-define("USERNAME", 'eric.gbekor@ashesi.edu.gh');
-define("PASSWORD", 'goodthings20');
+define("USERNAME", 'your username');
+define("PASSWORD", 'your password');
 
 //$opt = $_REQUEST['option'];
 //switch ($opt) {
