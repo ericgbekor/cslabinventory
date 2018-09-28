@@ -72,12 +72,19 @@ if(!isset($_SESSION['USER']['user_id'])){
             <p>Inventory</p>
           </a>
         </li>
-        <li class="nav-item ">
-        <a class="nav-link" href="./requests.php">
-        <i class="material-icons">bubble_chart</i>
-        <p>Requests</p>
-        </a>
-        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="./requests.php">
+              <i class="material-icons">bubble_chart</i>
+              <p>All Request</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./checkedout.php">
+              <i class="material-icons">content_paste</i>
+              <p>Checked Out</p>
+            </a>
+          </li>
+
 
           <li class="nav-item ">
               <a class="nav-link" href="./log.php">

@@ -374,6 +374,7 @@ function check_out(){
 
 
     include_once("../models/request.php");
+    include_once("../models/checkedout.php");
     include_once("../models/logs.php");
 
     $userLog = new logs();

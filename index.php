@@ -28,11 +28,9 @@
 	<sript src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></sript>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-
 </head>
 <body>
-<nav class="navbar navbar-expand-lg fixed-top navbar-transparent" color-on-scroll="300">
-        <div class="container">
+	<nav class="navbar navbar-expand-lg fixed-top navbar-transparent" color-on-scroll="300">
 			<div class="navbar-translate logo">
 				<a class="navbar-brand simple-text logo-normal" href="#">Ashesi CS Lab</a>
 	            <button class="navbar-toggler navbar-toggler-right navbar-burger" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +40,7 @@
 	            </button>
 			</div>
 	        <div class="collapse navbar-collapse" id="navbarToggler">
-	            <ul class="navbar-nav ml-auto">
+	            <ul class="navbar-nav ml-auto" id="drop">
 					<li class="nav-item nav-link">
 	                    <button onclick="location.href='./views/login.php'" class="nav-link btn btn-secondary"><i class="nc-icon nc-layout-11"></i>Admin Log in</button>
 	                </li>
@@ -52,9 +50,8 @@
 
 	            </ul>
 	        </div>
-		</div>
     </nav>
-
+		
 		<div class="page-header" data-parallax="true">
 			<div class="filter"></div>
 			<div class="container">
@@ -328,5 +325,13 @@
     }
 
 </script>
+<!--<script type="text/javascript">
+	$(document).ready(function(){
+		$("#navbarToggler").click(function(){
+		$("#drop").toggle();
+	});
+			
+</script>-->
+
 
 </html>

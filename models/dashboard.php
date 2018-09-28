@@ -64,6 +64,14 @@ class dashboard extends database {
     }
 
 
+
+    /************8*get categories*********************************/
+    /*This query returns all categories of items*/
+    function getCategories(){
+        $str_query="select DISTINCT category_name from items_category";
+        return $this->query($str_query);
+    }
+
 }
 
 ?>

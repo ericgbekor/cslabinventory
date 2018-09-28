@@ -70,12 +70,19 @@ if(!isset($_SESSION['USER']['user_id'])){
               <p>Inventory</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item active">
             <a class="nav-link" href="./requests.php">
               <i class="material-icons">bubble_chart</i>
-              <p>Requests</p>
+              <p>All Request</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./checkedout.php">
+              <i class="material-icons">content_paste</i>
+              <p>Checked Out</p>
+            </a>
+          </li>
+
 
             <li class="nav-item ">
                 <a class="nav-link" href="./log.php">
@@ -174,11 +181,13 @@ if(!isset($_SESSION['USER']['user_id'])){
                 <div class="card-header card-header-success">
                   <div class="ct-chart" id="dailySalesChart"></div>
                 </div>
-                <div class="card-body">
-                  <h4 class="card-title">Total Item Categories</h4>
-                  <p class="card-category">
-                    <span class="text-success" id="totalItems"></p>
-                </div>
+                <a href="categories.php">
+                  <div class="card-body">
+                    <h4 class="card-title">Total Item Categories</h4>
+                    <p class="card-category">
+                      <span class="text-success" id="totalItems"></p>
+                  </div>
+                </a>
                 <div class="card-footer">
                   <div class="stats">
                     <i class="material-icons">access_time</i> recently updated

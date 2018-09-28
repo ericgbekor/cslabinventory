@@ -66,7 +66,7 @@ if(!isset($_SESSION['USER']['user_id'])){
               <p>Categories</p>
             </a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="./items.php">
               <i class="material-icons">library_books</i>
               <p>Inventory</p>
@@ -85,13 +85,24 @@ if(!isset($_SESSION['USER']['user_id'])){
             </a>
           </li>
 
-
             <li class="nav-item ">
                 <a class="nav-link" href="./log.php">
                     <i class="material-icons">bubble_chart</i>
                     <p>Log</p>
                 </a>
             </li>
+
+          <!--<li class="nav-item dropdown active">-->
+            <!--<a class="nav-link" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
+              <!--<i class="material-icons">bubble_chart</i>-->
+              <!--<p>Request</p>-->
+            <!--</a>-->
+            <!--<div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+              <!--<a class="dropdown-item" href="#">All</a>-->
+              <!--<a class="dropdown-item" href="requests.php">Pending</a>-->
+              <!--<a class="dropdown-item" href="approvedRequests.php">Approved</a>-->
+            <!--</div>-->
+          <!--</li>-->
           <!--<li class="nav-item ">-->
             <!--<a class="nav-link" href="./map.php">-->
               <!--<i class="material-icons">location_ons</i>-->
@@ -118,7 +129,7 @@ if(!isset($_SESSION['USER']['user_id'])){
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">Inventory Items</a>
+            <a class="navbar-brand" href="#pablo">checked out</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -144,24 +155,6 @@ if(!isset($_SESSION['USER']['user_id'])){
                     Stats
                   </p>
                 </a>
-              </li>
-              <li class="nav-item dropdown">
-                <button class="btn btn-primary btn-round btn-just-icon" id="" data-toggle="modal" aria-haspopup="true"
-                        aria-expanded="false" data-target="#addModal">
-                  <i class="material-icons">add</i>
-                  <div class="ripple-container"></div>
-                  <!--<span class="notification"></span>-->
-                  <!--<p class="d-lg-none d-md-block">-->
-                    <!--Some Actions-->
-                  <!--</p>-->
-                </button>
-                <!--<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">-->
-                  <!--<a class="dropdown-item" href="#">Mike John responded to your email</a>-->
-                  <!--<a class="dropdown-item" href="#">You have 5 new tasks</a>-->
-                  <!--<a class="dropdown-item" href="#">You're now friend with Andrew</a>-->
-                  <!--<a class="dropdown-item" href="#">Another Notification</a>-->
-                  <!--<a class="dropdown-item" href="#">Another One</a>-->
-                <!--</div>-->
               </li>
 
                 <li class="nav-item">
@@ -207,7 +200,7 @@ if(!isset($_SESSION['USER']['user_id'])){
             <div class="col-md-12">
               <div class="card card-plain">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title mt-0"> Item Categories</h4>
+                  <h4 class="card-title mt-0"> Checked out Items</h4>
                   <!--<p class="card-category"> Details of Item Categories</p>-->
                 </div>
                 <div class="card-body">
@@ -216,13 +209,13 @@ if(!isset($_SESSION['USER']['user_id'])){
                       <thead>
                       <tr>
                         <th class="text-center">#</th>
-                        <th>Category</th>
-                        <th>Condition</th>
-                        <th>Location</th>
                         <th>Status</th>
+                        <th>Checked Out By</th>
+                        <th>Checked Out At</th>
+                        <th>Item Code</th>
                         <th>Comments</th>
-                        <th>Created At</th>
-<!--                        <th>Updated At</th>-->
+                        <th>check in</th>
+                        <!--<th>Updated At</th>-->
                         <!--<th class="text-right">Actions</th>-->
                       </tr>
                       </thead>
@@ -237,90 +230,114 @@ if(!isset($_SESSION['USER']['user_id'])){
             </div>
 
           <!-- Delete Modal -->
-          <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <!--<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+            <!--<div class="modal-dialog" role="document">-->
+              <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                  <!--<h5 class="modal-title" id="deleteModalLabel">Delete Item</h5>-->
+                  <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                    <!--<span aria-hidden="true">&times;</span>-->
+                  <!--</button>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                  <!--Do you want to delete item?-->
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                  <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                  <!--<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="deleteItemComplete()">Delete</button>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+
+
+          <!-- Add Modal -->
+          <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="deleteModalLabel">Delete Item</h5>
+                  <h5 class="modal-title" id="addCommentLabel">Add Comment</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  Do you want to delete item?
+
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="comments" placeholder="Any comments?">
+                  </div>
+
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="deleteItemComplete()">Delete</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addCommentComplete()">Add</button>
                 </div>
               </div>
             </div>
           </div>
 
-
-          <!-- Add Modal -->
-          <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+          <!-- Checkout Modal -->
+          <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="addModalLabel">New Item</h5>
+                  <h5 class="modal-title" id="checkoutModalLabel">Check Out</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="code" placeholder="Item Code">
-                  </div>
-                  <div class="form-group">
-                    <select class="form-control category" id="cat_select">
-                    <script>
-                        $(document).ready(function () {
-                            $.ajax({
-                                type: "GET",
-                                async:true,
-                                url: "../controllers/items_category_ajax.php?cmd=1",
-                                data: {},
-                                cache: false,
-                                complete: function (data) {
-                                    var newdata = $.parseJSON(data.responseText);
-                                    $("#cat_select").php("<option class='form-group' value=-1>"+ "Click to select category" + "</option>");
 
-                                    for(i=0;i<newdata.categories.length;i++){
-                                        var selectdata = "<option class='form-group' value="+newdata.categories[i].category_id+ ">"+newdata.categories[i].category_name+"</option>";
-                                        $(selectdata).appendTo("#cat_select");
-
-                                    }
-                                }
-                            });
-
-                        });
-
-                    </script>
-                    </select>
-                  </div>
                   <div class="form-group">
-                    <select class="form-control condition">
-                      <option value="-1" class="form-group">Click to select item condition</option>
-                      <option value="working" class="form-group ">Working</option>
-                      <option value="not working" class="form-group ">Not Working</option>
-                      <option value="partially_working" class="form-group ">Partially Working</option>
+                    <input type="text" class="form-control" id="request" placeholder="Request Id">
+                  </div>
 
-                    </select>
-                  </div>
                   <div class="form-group">
-                    <input type="text" class="form-control" id="location" placeholder="Item Location">
+                    <input type="text" class="form-control" id="item" placeholder="Item Code">
                   </div>
+
                   <div class="form-group">
-                    <input type="text" class="form-control" id="status" placeholder="Item Status">
+                    <input type="text" class="form-control" id="receiver" placeholder="Name of Recepient">
                   </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="comments" placeholder="Comments">
-                  </div>
+
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addItem()">Add</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="checkOutComplete()">Check Out</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Check in Modal -->
+          <div class="modal fade" id="checkInModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="checkInModalLabel">Check In</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="request_id" placeholder="Request Id">
+                  </div>
+
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="item_code" placeholder="Item Code">
+                  </div>
+
+
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="returned_by" placeholder="Returned By">
+                  </div>
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="checkInComplete()">Check In</button>
                 </div>
               </div>
             </div>
@@ -338,57 +355,54 @@ if(!isset($_SESSION['USER']['user_id'])){
                 </div>
                 <div class="modal-body">
                   <div class="form-group">
-                    <input type="text" class="form-control" id="upcode" placeholder="Item Code">
+                    <label for="itemcode">Request Id</label>
+                    <input type="text" class="form-control" id="itemcode" >
                   </div>
+
                   <div class="form-group">
-                    <select class="form-control upcategory" id="catselect">
-                      <script>
-                          $(document).ready(function () {
-                              $.ajax({
-                                  type: "GET",
-                                  async:true,
-                                  url: "contollers/items_category_ajax.php?cmd=1",
-                                  data: {},
-                                  cache: false,
-                                  complete: function (data) {
-                                      var newdata = $.parseJSON(data.responseText);
-                                      $("#catselect").php("<option class='form-group' value=-1>"+ "Click to select category" + "</option>");
-
-                                      for(i=0;i<newdata.categories.length;i++){
-                                          var selectdata = "<option class='form-group' value="+newdata.categories[i].category_id+ ">"+newdata.categories[i].category_name+"</option>";
-                                          $(selectdata).appendTo("#catselect");
-
-                                      }
-                                  }
-                              });
-
-                          });
-
-                      </script>
-                    </select>
+                    <label for="fullname">Full Name</label>
+                    <input type="text" class="form-control" id="fullname" >
                   </div>
-                  <div class="form-group">
-                    <select class="form-control upcondition">
-                      <option value="-1" class="form-group">Click to select item condition</option>
-                      <option value="working" class="form-group ">Working</option>
-                      <option value="not working" class="form-group ">Not Working</option>
-                      <option value="partially_working" class="form-group ">Partially Working</option>
 
-                    </select>
-                  </div>
                   <div class="form-group">
-                    <input type="text" class="form-control" id="uplocation" placeholder="Item Location">
+                    <label for="phone">Phone</label>
+                    <input type="text" class="form-control" id="phone" >
                   </div>
+
                   <div class="form-group">
-                    <input type="text" class="form-control" id="upstatus" placeholder="Item Status">
+                    <label for="item_borrowed">Item Borrowed</label>
+                    <input type="text" class="form-control" id="item_borrowed" >
                   </div>
+
                   <div class="form-group">
-                    <input type="text" class="form-control" id="upcomments" placeholder="Comments">
+                    <label for="usergroup">User Group</label>
+                    <input type="text" class="form-control" id="usergroup" >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="department">Department</label>
+                    <input type="text" class="form-control" id="department" >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="reason">Reason</label>
+                    <input type="text" class="form-control" id="reason" >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="date_needed">Date Needed</label>
+                    <input type="text" class="form-control" id="date_needed" placeholder="Comments">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="return_date">Item Return Date</label>
+                    <input type="text" class="form-control" id="return_date" placeholder="Comments">
                   </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="editItemComplete()">Update</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="declineRequest()">Decline</button>
+                  <button type="button" class="btn btn-success" data-dismiss="modal" onclick="approveRequest()">Approve</button>
                 </div>
               </div>
             </div>
@@ -460,7 +474,7 @@ if(!isset($_SESSION['USER']['user_id'])){
           $.ajax({
               type: "GET",
               async:true,
-              url: "../controllers/items_ajax.php?cmd=1",
+              url: "../controllers/request_ajax.php?cmd=1",
               data: {},
               cache: false,
               complete: viewCategories
@@ -474,27 +488,27 @@ if(!isset($_SESSION['USER']['user_id'])){
               return
           }
           else {
-              var item = $.parseJSON(xhr.responseText)
-              if (item == false) {
+              var request = $.parseJSON(xhr.responseText)
+              if (request == false) {
                   alert("Error while loading Categories")
                   return
               }
               else {
                   $("#itemtable tbody").html("");
-                  for (i = 0; i < item.items.length; i++) {
+                  for (i = 0; i < request.requests.length; i++) {
 
-                      var data = "<tr id=" + item.items[i].item_code + ">" + "<td>" + item.items[i].item_code +
-                          "</td>" + "<td>" + item.items[i].category_name + "</td>" +
-                          "<td>" + item.items[i].item_condition + "</td>" + "<td>" + item.items[i].location + "</td>"
-                          + "<td>" + item.items[i].status + "<td>" + item.items[i].comments +
-                          "<td>" + item.items[i].created_at + "</td>" + "<td>" + "<td class='td-actions text-left' > "+
-                          "<button type='button' rel='tooltip' class='btn btn-success' onclick='editItem(this)'>"+
-                          "<i class='material-icons'>edit</i>" +
+                      var data = "<tr id=" + request.requests[i].request_id + ">" + "<td>" + request.requests[i].request_id +
+                          "</td>" + "<td>" + request.requests[i].request_status + "</td>" +
+                          "<td>" + request.requests[i].checked_out_by + "</td>" + "<td>" + request.requests[i].checked_out_at + "</td>"
+                          + "<td>" + request.requests[i].item_code + "</td>" +
+                          "<td>" + request.requests[i].comments + "</td>" +"<td><button class='btn btn-outline-secondary' data-toggle='modal' aria-haspopup='true'                        aria-expanded='false' data-target='#checkInModal' onclick='checkInComplete()'> Check In<div class='ripple-container'></div></button></td>" + 
+                          "<td>" + "<td>" + "<td class='td-actions text-left' > "+
+                          "<button type='button' rel='tooltip' class='btn btn-success' onclick='viewRequest(this)'>"+
+                          "<i class='material-icons'>visibility</i>" +
                           "</button>"+
-                          "<button type='button' rel='tooltip' class='btn btn-danger' onclick='deleteItem(this)'>"+
-                          "<i class='material-icons'>delete</i>"+
-                          "</button>"+
-                          "</td>" + "</tr>" ;
+                          "<button type='button' rel='tooltip' class='btn btn-primary' onclick='addComment(this)'>"+
+                          "<i class='material-icons'>comment</i>"+
+                          "</td>" + "</tr>"  ;
 
                       $(data).appendTo("#itemtable tbody");
 
@@ -504,29 +518,60 @@ if(!isset($_SESSION['USER']['user_id'])){
           }
       }
 
+      function checkInComplete(){
 
-
-      function editItem(object){
-          var current_object = object;
-//          var current_row_id = current_object.parentNode.parentNode.rowIndex;
-          var current_item_id = $(current_object).closest('tr').attr('id');
-
+          var returned = $('#returned_by').val();
+          var itemcode = $('#item_code').val();
+          var request_id = $('#request_id').val();
           $.ajax({
               type: "GET",
               async:true,
-              url: "../controllers/items_ajax.php?cmd=3&item="+current_item_id,
+              url: "../controllers/request_ajax.php?cmd=12",
+              data: {
+                  request_id : request_id,
+                  itemcode: itemcode,
+                  returned: returned
+              },
+              cache: false,
+              complete: function(data){
+//                  console.log(request_id,itemcode, returned)
+
+                  alert($.parseJSON(data.responseText))
+
+                  location.reload();
+
+              },
+              error: function (data) {
+                  console.log($.parseJSON(data.responseText))
+              }
+
+          });
+      }
+
+      function viewRequest(object){
+          var current_object = object;
+//          var current_row_id = current_object.parentNode.parentNode.rowIndex;
+           var current_item_id = $(current_object).closest('tr').attr('id');
+          $.ajax({
+              type: "GET",
+              async:true,
+              url: "../controllers/request_ajax.php?cmd=5&request_id="+current_item_id,
               data: {},
               cache: false,
               complete: function(data){
                   var newdata = $.parseJSON(data.responseText)
-//                  console.log(newdata)
-                  $('#editModalTitle').text("Edit "+ newdata.category_name+ " : " + newdata.item_code)
-                  $('#upcode').val(newdata.item_code)
-                  $('#uplocation').val(newdata.location)
-                  $('#upstatus').val(newdata.status)
-                  $('#upcomments').val(newdata.comments)
-                  $('.upcategory').val(newdata.item_category).prop('selected',true);
-                  $('.upcondition').val(newdata.item_condition).prop('selected',true);
+                  console.log(newdata)
+                  $('#editModalTitle').text("Request for "+ newdata.item)
+                  $('#itemcode').val(newdata.request_id)
+                  $('#fullname').val(newdata.fullname)
+                  $('#usergroup').val(newdata.user_category)
+                  $('#date_needed').val(newdata.date_needed)
+                  $('#return_date').val(newdata.date_to_return)
+                  $('#department').val(newdata.department)
+                  $('#reason').val(newdata.reason)
+                  $('#item_borrowed').val(newdata.item_borrowed)
+                  $('#phone').val(newdata.phone)
+
 
 
                   $("#editModal").modal({
@@ -598,56 +643,34 @@ if(!isset($_SESSION['USER']['user_id'])){
 
       }
 
-      function deleteItemComplete(){
-          console.log("#"+current_item_id)
-          $.ajax({
-              type: "GET",
-              async:true,
-              url: "../controllers/items_ajax.php?cmd=2&item="+current_item_id,
-              data: {},
-              cache: false,
-              complete: function(){
 
-                  $("#"+current_item_id).remove();
-//                  $.notify({
-//                      icon: "add_alert",
-//                      message: "Item deleted successfully"
-//
-//                  },{
-//                      type: 'success',
-//                      timer: 1000,
-//                      placement: {
-//                          from: "top",
-//                          align: "left"
-//                      }
-//                  });
+      function addComment(object) {
+          current_object = object;
+//           current_row_id = current_object.parentNode.parentNode.rowIndex;
+          current_item_id = $(current_object).closest('tr').attr('id');
 
-              }
+//          alert(current_item_id);
+          $("#commentModal").modal({
+              show:true,
+              focus:true
+          })
 
 
-          });
+
       }
 
-      function addItem(){
-          var code = $('#code').val();
-          var category = $('.category option:selected').val();
-          var item_condition = $('.condition option:selected').val();
-          var status = $('#status').val();
-          var item_location = $('#location').val();
+      function addCommentComplete(){
           var comments = $('#comments').val();
+          console.log(comments, current_item_id);
 
 //          console.log(category, item_condition, code, status, item_location, comments)
 
           $.ajax({
               type: "GET",
               async:true,
-              url: "../controllers/items_ajax.php?cmd=0",
+              url: "../controllers/request_ajax.php?cmd=0",
               data: {
-                  code:code,
-                  category:category,
-                  item_condition: item_condition,
-                  status: status,
-                  item_location:item_location,
+                  request_id : current_item_id,
                   comments:comments
               },
               cache: false,
@@ -664,6 +687,8 @@ if(!isset($_SESSION['USER']['user_id'])){
 
 
       }
+
+
           </script>
 
 </body>
